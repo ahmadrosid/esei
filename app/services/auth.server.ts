@@ -29,13 +29,13 @@ authenticator.use(
             throw new AuthorizationError('Bad Credentials: Password must be a string')
 
         // login the user, this could be whatever process you want
-        if (email === 'user@gmail.com' && password === 'secret') {
+        if (email === 'user@gmail.com' && password === 'secreet') {
             let token = () => (Math.random() + 1).toString(36).slice(2);
 
             user = {
                 name: email,
                 token: `${token()}${token()}${token()}`,
-                user_id: '120'
+                user_id: 120
             };
 
             // the type of this user must match the type you pass to the Authenticator

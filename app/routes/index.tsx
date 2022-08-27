@@ -1,10 +1,11 @@
-import { json, MetaFunction } from "remix";
-import { ActionFunction, Form, LoaderFunction, useLoaderData } from "remix";
+import { json, MetaFunction, redirect } from "remix";
+import { ActionFunction, LoaderFunction, useLoaderData } from "remix";
 import authenticator from "~/services/auth.server";
 import { db } from "~/utils/db.server";
+import { User } from '~/services/session.server';
 
 type LoaderData = {
-  // user: Awaited<ReturnType<typeof getUser>>;
+  user: User | Error;
   projects: Array<{ id: string; name: string, description: string, createdAt: Date }>;
 };
 
@@ -18,8 +19,11 @@ export let loader: LoaderFunction = async ({ request }) => {
     select: { id: true, name: true, description: true, createdAt: true },
   });
 
+  if (!user) return redirect("/login");
+
   const data: LoaderData = {
-    projects
+    projects,
+    user
   }
 
   return json(data);
@@ -31,8 +35,8 @@ export const action: ActionFunction = async ({ request }) => {
 
 export const meta: MetaFunction = () => {
   return {
-      title: "Esei - Plan your work easier!",
-      description: "Project management made easy",
+    title: "Esei - Plan your work easier!",
+    description: "Project management made easy",
   };
 };
 
@@ -41,8 +45,10 @@ const Index = () => {
   return (
     <>
       <div className="grid gap-2">
-        <h2 className="text-3xl py-4">Projects</h2>
-
+        <div className="py-4 space-y-2">
+          <h2 className="text-3xl">Projects</h2>
+          <p>Welcome back {data.user.name}</p>
+        </div>
         {data.projects.length == 0 ? (
           <div>
             <div className="text-sm py-2">

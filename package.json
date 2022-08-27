@@ -1,8 +1,8 @@
 {
   "private": true,
-  "name": "mixtarter-tailwind",
+  "name": "esei",
   "description": "",
-  "author": "sozonome",
+  "author": "ahmadrosid",
   "version": "0.1.0",
   "scripts": {
     "build": "yarn build:css && remix build",

@@ -1,4 +1,4 @@
-import type { CatchBoundaryComponent } from "@remix-run/react/routeModules";
+import type { CatchBoundaryComponent } from "@remix-run/react/dist/routeModules";
 import { Link, useCatch } from "remix";
 
 import Document from "./Document";

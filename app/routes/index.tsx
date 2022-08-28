@@ -2,10 +2,10 @@ import { json, MetaFunction, redirect } from "remix";
 import { ActionFunction, LoaderFunction, useLoaderData } from "remix";
 import authenticator from "~/services/auth.server";
 import { db } from "~/utils/db.server";
-import { User } from '~/services/session.server';
+import { User } from '~/utils/models.server';
 
 type LoaderData = {
-  user: User | Error;
+  user: User;
   projects: Array<{ id: string; name: string, description: string, createdAt: Date }>;
 };
 
@@ -47,7 +47,7 @@ const Index = () => {
       <div className="grid gap-2">
         <div className="py-4 space-y-2">
           <h2 className="text-3xl">Projects</h2>
-          <p>Welcome back {data.user.name}</p>
+          <p>Welcome back {data.user.username}!</p>
         </div>
         {data.projects.length == 0 ? (
           <div>
@@ -61,7 +61,7 @@ const Index = () => {
         ) : (
           <div className="grid grid-cols-4 gap-4">
             {data.projects.map(item => (
-              <div key={item.id} className="border bg-white rounded-md p-6">
+              <div key={item.id} className="border bg-white shadow-sm rounded-md p-6">
                 <a href={`/projects/${item.id}`}>
                   <h2 className="text-xl text-slate-800">{item.name}</h2>
                   <p className="text-slate-600 text-sm">{item.description}</p>

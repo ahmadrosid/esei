@@ -1,5 +1,6 @@
-// app/services/session.server.ts
 import { createCookieSessionStorage } from 'remix';
+import { db } from "~/utils/db.server";
+import bcrypt from "bcryptjs";
 
 // export the whole sessionStorage object
 export let sessionStorage = createCookieSessionStorage({
@@ -16,9 +17,27 @@ export let sessionStorage = createCookieSessionStorage({
 // you can also export the methods individually for your own usage
 export let { getSession, commitSession, destroySession } = sessionStorage;
 
-// define the user model
-export type User = {
-  name: string;
-  token: string;
-  user_id: number;
+type LoginForm = {
+  username: string;
+  password: string;
 };
+
+export async function login({
+  username,
+  password,
+}: LoginForm) {
+  const user = await db.user.findUnique({
+    where: { email: username },
+  });
+  if (!user) return null;
+
+  const isCorrectPassword = await bcrypt.compare(
+    password,
+    user.passwordHash
+  );
+  if (!isCorrectPassword) return null;
+
+  return { id: user.id, username: user.username, email: user.email };
+}
+
+

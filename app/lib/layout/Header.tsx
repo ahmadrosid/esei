@@ -11,7 +11,9 @@ const Header = () => {
       </h1>
       <div>
         <a href="/logout">
-          <button className="text-xs text-slate-600 border border-slate-600 rounded-md px-4 py-2">Sign out</button>
+          <button type="button" className="text-xs text-slate-600 border border-slate-600 rounded-md px-4 py-2">
+            Sign out
+          </button>
         </a>
       </div>
     </header>

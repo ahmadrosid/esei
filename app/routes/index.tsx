@@ -56,7 +56,9 @@ const Index = () => {
       </div>
       {data.projects.length == 0 ? (
         <div>
-          <div className="text-sm py-2">You don&apos;t have any project yet.</div>
+          <div className="text-sm py-2">
+            You don&apos;t have any project yet.
+          </div>
           <a href="/projects/new">
             <button className="bg-slate-600 rounded px-8 py-2 text-sm text-white">
               Create new project

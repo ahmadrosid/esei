@@ -1,6 +1,6 @@
 import { json, redirect } from "@remix-run/node";
 import { useState } from "react";
-import type { LoaderFunction, ActionFunction } from "remix";
+import type { LoaderFunction, ActionFunction, MetaFunction } from "remix";
 import { Form, useLoaderData } from "remix";
 
 import authenticator from "~/services/auth.server";
@@ -11,6 +11,13 @@ type LoaderData = {
   project: Project;
   projectId: string | undefined;
   user: User;
+};
+
+export const meta: MetaFunction = ({ data }) => {
+  return {
+    title: data.project.name,
+    description: data.project.description,
+  };
 };
 
 export const loader: LoaderFunction = async ({ request, params }) => {
@@ -77,19 +84,21 @@ export default function ProjectDetail() {
         <div className="py-4 space-y-2">
           <div className="bg-white rounded border shadow-sm">
             {data.project.tasks.map((item) => (
-              <div
-                key={item.id}
-                className="border-b flex items-center justify-between"
-              >
+              <div key={item.id} className="border-b flex items-center justify-between">
                 <div className="flex gap-2 items-center p-3">
                   <div className="w-2 h-2 bg-blue-500 rounded-sm" />
                   <p className="text-base">{item.name}</p>
                 </div>
                 <div className="flex items-center gap-x-1">
-                  <div>
+                  <div className="px-2">
                     <span className="text-xs px-2 py-1 border rounded border-slate-600 bg-slate-500 text-white ">
                       {item.status}
                     </span>
+                  </div>
+                  <div className="p-4 hover:bg-slate-200 cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                    </svg>
                   </div>
                   <div className="cursor-pointer hover:bg-slate-200 p-4">
                     <svg

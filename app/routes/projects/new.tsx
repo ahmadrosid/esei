@@ -1,7 +1,8 @@
 import { redirect } from "@remix-run/node";
-import type { MetaFunction, ActionFunction } from "remix";
+import type { MetaFunction, ActionFunction, LoaderFunction } from "remix";
 import { Form } from "remix";
 
+import authenticator from "~/services/auth.server";
 import { db } from "~/utils/db.server";
 
 export const meta: MetaFunction = () => {
@@ -9,6 +10,12 @@ export const meta: MetaFunction = () => {
     title: "Esei - Plan your work easier!",
     description: "Project management made easy",
   };
+};
+
+export const loader: LoaderFunction = async ({ request }) => {
+  await authenticator.isAuthenticated(request, {
+    failureRedirect: "/login",
+  });
 };
 
 export const action: ActionFunction = async ({ request }) => {
@@ -43,24 +50,25 @@ const New = () => {
           <div className="space-y-2">
             <label htmlFor="name" className="text-sm">
               Name
+              <input
+                id="name"
+                name="name"
+                type="text"
+                placeholder="The next cool things"
+                className="p-2 w-full border rounded-md text-sm"
+              />
             </label>
-            <input
-              id="name"
-              name="name"
-              placeholder="The next cool things"
-              className="p-2 w-full border rounded-md text-sm"
-            />
           </div>
           <div className="space-y-2">
             <label htmlFor="description" className="text-sm">
               Description
+              <textarea
+                id="description"
+                name="description"
+                placeholder="Your project descriptions"
+                className="p-2 w-full border rounded-md text-sm"
+              />
             </label>
-            <textarea
-              id="description"
-              name="description"
-              placeholder="Your project descriptions"
-              className="p-2 w-full border rounded-md text-sm"
-            />
           </div>
           <div>
             <button

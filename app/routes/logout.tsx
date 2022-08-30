@@ -2,6 +2,8 @@ import type { LoaderFunction } from "remix";
 
 import authenticator from "~/services/auth.server";
 
-export const loader: LoaderFunction = async ({ request }) => {
+const loader: LoaderFunction = async ({ request }) => {
   await authenticator.logout(request, { redirectTo: "/login" });
 };
+
+export default loader;

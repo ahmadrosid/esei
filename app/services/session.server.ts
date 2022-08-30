@@ -3,7 +3,6 @@ import { createCookieSessionStorage } from "remix";
 
 import { db } from "~/utils/db.server";
 
-// export the whole sessionStorage object
 export const sessionStorage = createCookieSessionStorage({
   cookie: {
     name: "_session", // use any name you want here
@@ -15,7 +14,6 @@ export const sessionStorage = createCookieSessionStorage({
   },
 });
 
-// you can also export the methods individually for your own usage
 export const { getSession, commitSession, destroySession } = sessionStorage;
 
 type LoginForm = {

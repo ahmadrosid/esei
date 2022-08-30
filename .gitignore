@@ -25,3 +25,4 @@ other/postcss.ignored
 .env.production.local
 
 yarn.lock
+prisma/dev.db

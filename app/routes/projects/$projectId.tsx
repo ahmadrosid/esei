@@ -95,14 +95,21 @@ export default function ProjectDetail() {
   const [showInput, setShowInput] = useState(false);
 
   let transition = useTransition();
-  let isAdding = transition.state == "submitting";
+  let isAdding = transition.state === "submitting";
   let formRef = useRef<HTMLFormElement>(null);
+  let inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (!isAdding) {
       formRef.current?.reset();
     }
   }, [isAdding]);
+
+  const keyDownHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.code == "Escape") {
+      if (showInput) setShowInput(false)
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -179,8 +186,9 @@ export default function ProjectDetail() {
               <Form method="post" replace ref={formRef}>
                 <input
                   autoFocus={true}
+                  onKeyDown={(e) => keyDownHandler(e)}
                   name="name"
-                  className="text-sm bg-slate-50 w-full p-3 outline-none rounded"
+                  className="text-sm bg-slate-50 w-full p-2 outline-none rounded"
                   placeholder="Task name..."
                 />
                 <input type="hidden" name="project_id" value={data.project.id} />
@@ -190,10 +198,10 @@ export default function ProjectDetail() {
               </Form>
             </div>
           )}
-          <div className="px-2">
+          <div className="p-2">
             <div
               onClick={() => setShowInput(true)}
-              className="inline-flex py-2 items-center gap-2 text-slate-500 cursor-pointer"
+              className="inline-flex items-center gap-2 text-slate-500 cursor-pointer"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -209,7 +217,7 @@ export default function ProjectDetail() {
                   d="M12 5v14m7-7H5"
                 />
               </svg>
-              <span className="text-sm pr-6 hover:text-slate-700">
+              <span className="text-sm pr-8 hover:text-slate-700">
                 Add task
               </span>
             </div>

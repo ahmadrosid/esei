@@ -7,7 +7,8 @@ Clone repository and install dependency.
 git clone https://github.com/ahmadrosid/esei.git
 cd esei
 yarn install
-# Or if you don't use yarn you can use npm
+
+# Or 
 npm install
 ```
 
@@ -18,7 +19,7 @@ npx prisma db push
 yarn seed
 yarn dev
 
-# Or if you don't use yarn you can use npm
+# Or
 npm run seed
 npm run dev
 ```

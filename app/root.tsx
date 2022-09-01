@@ -1,8 +1,8 @@
 import { Outlet } from "remix";
 import type { LinksFunction } from "remix";
 
-import appStyles from "./styles/app.css";
-import tailwindStyles from "./styles/tailwind.css";
+import appStyles from "~/styles/app.css";
+import tailwindStyles from "~/styles/tailwind.css";
 
 import { CatchBoundary, Document, ErrorBoundary } from "~/lib/root";
 
